@@ -18,9 +18,24 @@
     <ClCompile Include="SuspendLANSchool.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="antiWebController.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="antiLanSchoolProcess.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="utils.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="antiWebController.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="antiLanSchoolProcess.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="utils.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
