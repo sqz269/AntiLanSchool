@@ -57,11 +57,10 @@ int main()
 	if (!checkIfNtAuthority())
 		execAsNtAuthority();
 
-	//getLoggedOnUsername();
-	std::string user;
-	std::string domain;
-	GetUserFromProcess(getProcID("explorer.exe"), user, domain);
-	std::cout << user << domain;
+	if (checkIfNtAuthority())
+		setDirectoryPermissionReadOnly(chromeGetExtensionDirectory());
+	getchar();
+	//	chromeRemoveInstalledExtension();
 	//while (true)
 	//{
 	//	displayOptions();

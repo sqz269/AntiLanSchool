@@ -8,7 +8,6 @@ bool checkIfNtAuthority()
 	char user[128];
 	DWORD user_len = 128;
 	GetUserName(user, &user_len);
-	printf("Current user name: %s\n", user);
 	return !strcmp(user, "SYSTEM");
 }
 
@@ -107,12 +106,13 @@ HRESULT GetUserFromProcess(const DWORD procId, std::string &strUser, std::string
 /*
 	@Deprecated
 */
-std::wstring getUserLocalAppdataDirectory()
+std::string getUserLocalAppdataDirectory()
 {
-	PWSTR path = NULL;
-	SHGetKnownFolderPath(FOLDERID_LocalAppData, NULL, NULL, &path);
-	std::wstring hi = std::wstring(path);
-	return hi;
+	std::string user;
+	std::string domain;
+	GetUserFromProcess(getProcID("explorer.exe"), user, domain);
+	std::string localAppData = "C:\\Users\\" + user+ "\\AppData\\Local";
+	return localAppData;
 }
 
 /*
@@ -149,7 +149,6 @@ void execAsNtAuthority()
 		printf("PsExec.exe path not specified, using default: %s\n", psexecPath.c_str());
 	}
 
-	std::string sExePath(exePath);
 	std::string command;
 	command = psexecPath + " -i -s " + exePath;
 	printf("Constructed command: %s\n", command.c_str());

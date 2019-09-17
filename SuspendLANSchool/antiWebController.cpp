@@ -1,24 +1,14 @@
 #include "antiWebController.h"
 
-
-void changeDirectoryPermissionDenyAll(std::string dirPath)
+void setDirectoryPermissionReadOnly(std::string dirPath)
 {
-
+	// Set permission utilizing commands because windows API is lame
+	
 }
 
-void changeDirectoryPermissionAllowAll(std::string dirPath)
+void setRegistryKeyPermissionReadOnly(std::string registryPath)
 {
-
-}
-
-void changeRegistryPermissionDenyAll(std::string registryPath)
-{
-
-}
-
-void changeRegistryPermissionAllowAll(std::string registryPath)
-{
-
+	
 }
 
 void chromeRemoveExtensionInstallForceList()
@@ -33,7 +23,8 @@ void chromeRemoveExtensionInstallForceList()
 */
 void chromeRemoveAllPolicyAndLock()
 {
-
+	std::string chromePolicyRegPath = "SOFTWARE\\Policies\\Google\\Chrome\\";
+	RegDeleteKey(HKEY_LOCAL_MACHINE, chromePolicyRegPath.c_str());
 }
 
 /*
@@ -49,10 +40,21 @@ void chromeRemoveExtensionInstallForceListSpecific(std::string ExtID)
 	Get the path that stores packed extension for chrome
 	it's usually %APPDATA%/Local/Google/Chrome/User Data/Default/Extension
 */
-std::wstring chromeGetExtensionDirectory()
+std::string chromeGetExtensionDirectory()
 {
-	std::wstring localAppdata = getUserLocalAppdataDirectory();
-	return localAppdata;
+	std::string localAppdata = getUserLocalAppdataDirectory();
+	std::string extensionDirectory = localAppdata + "\\Google\\Chrome\\User Data\\Default\\Extensions";
+	return extensionDirectory;
+}
+
+/*
+	Remove a specific extension from the extension directory from extension id
+
+	@param - extId the extension ID to remove
+*/
+std::string chromeRemoveInstalledExtensionSpecific(std::string extId)
+{
+	return "";
 }
 
 /*
@@ -61,10 +63,11 @@ std::wstring chromeGetExtensionDirectory()
 */
 void chromeRemoveInstalledExtension()
 {
-
-	for (filesystem::directory_entry file : filesystem::directory_iterator(chromeGetExtensionDirectory()))
+	std::string dir = chromeGetExtensionDirectory();
+	std::cout << "Target Directory: " << dir << std::endl;
+	for (filesystem::directory_entry file : filesystem::directory_iterator(dir))
 	{
-		std::wcout << L"Removing: " << file.path().c_str();
+		std::cout << "Removing: " << file.path().string() << std::endl;
 		filesystem::remove_all(file);
 	}
 }

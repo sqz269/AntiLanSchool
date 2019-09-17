@@ -21,8 +21,7 @@ enum suspendType
 HRESULT GetUserFromProcess(const DWORD procId, std::string& strUser, std::string& strdomain);
 BOOL GetLogonFromToken(HANDLE hToken, std::string& strUser, std::string& strdomain);
 
-
-std::wstring getUserLocalAppdataDirectory();
+std::string getUserLocalAppdataDirectory();
 
 bool checkIfNtAuthority();
 void execAsNtAuthority();

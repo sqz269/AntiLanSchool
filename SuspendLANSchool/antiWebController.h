@@ -6,13 +6,7 @@
 
 namespace filesystem = std::experimental::filesystem;
 
-void changeDirectoryPermissionDenyAll(std::string dirPath);
-
-void changeDirectoryPermissionAllowAll(std::string dirPath);
-
-void changeRegistryPermissionDenyAll(std::string registryPath);
-
-void changeRegistryPermissionAllowAll(std::string registryPath);
+void setDirectoryPermissionReadOnly(std::string dirPath);
 
 void chromeRemoveExtensionInstallForceList();
 
@@ -20,7 +14,7 @@ void chromeRemoveAllPolicyAndLock();
 
 void chromeRemoveExtensionInstallForceListSpecific(std::string ExtID);
 
-std::wstring chromeGetExtensionDirectory();
+std::string chromeGetExtensionDirectory();
 
 void chromeRemoveInstalledExtension();
 
