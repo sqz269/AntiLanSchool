@@ -23,4 +23,5 @@ A program that prevents lanschool from partially or completely controlling the c
 
 ### Might do
 - Add Options to Launch Regedit/TaskMgr
+- Add Options to remove lanschool extension w/o requiring Administrator privilege
 - Automatically download PsExec
