@@ -3,6 +3,7 @@ A program that prevents lanschool from partially or completely controlling the c
 
 ## Features  
 - Terminates Process that controls the computer (student.exe)  
+- Suspend/Resumes stduent.exe  
 - Removes the extension that controls chrome to remove the website restrictions enforced  
 - Prevents lanschool extension from reinstalling also stops other Extension from installing (Work in Progress)  
 - Completely Removes policies enforced on chrome browser (Work in progress)  
