@@ -1,20 +1,23 @@
 #define NOMINMAX
-#define _CRT_SESCURE_NO_WARNINGS
 
-#include "antiLanSchoolProcess.h"
-#include "antiWebController.h"
+#include "options.h"
+#include "misc.h"
 #include <limits>
 
 
 void displayOptions()
 {
-	puts("Choose options:\n");
+	puts("Choose options:");
 	puts("0 - Kill LanSchool (students.exe)");
 	if (isLanSchoolSuspended)
 		puts("1 - Resume LanSchool");
 	else
 		puts("1 - Suspend LanSchool");
 	puts("2 - Kill Process");
+	puts("3 - Disable LanSchool Key logger (lskdata1.bin)");
+	puts("4 - Remove LanSchool Chrome Extension (Chrome Restart Required)");
+	puts("5 - Make Chrome Extension Directory Read Only");
+	puts("6 - Open explorer to specific path (Bypass C: Drive hiding)");
 }
 
 void parseOptions()
@@ -27,45 +30,65 @@ void parseOptions()
 	} while (std::cin.fail());
 	std::cin.clear();
 	std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-
+	printf("\n\n--------------------------------------\nExecution Details: \n");
 	switch (option)
 	{
-	case (0):
-		killProcess(getProcID(LANSCHOOLPROCESSNAME));
+		case (0):
+		{
+			killLanSchool();
+			break;
+		}
 
-	case (1):
-		if (isLanSchoolSuspended)
-			resumeProcThread(getProcID(LANSCHOOLPROCESSNAME));
-		else
-			suspendProcThread(getProcID(LANSCHOOLPROCESSNAME));
+		case (1):
+		{
+			suspendLanSchool();
+			break;
+		}
 
-	case (2):
-	{
-		printf("Enter target process name: ");
-		std::string procname;
-		std::getline(std::cin, procname);
-		killProcess(getProcID(procname.c_str()));
-	}
+		case (2):
+		{
+			killProcessWrapper();
+			break;
+		}
 
-	default:
-		break;
+		case (3):
+		{
+			printf("Disable Key Logger feature work in progress");
+			break;
+		}
+
+		case (4):
+		{
+			deleteLanSchoolChromeExt();
+			break;
+		}
+
+		case (5):
+		{
+			setDirectoryPermissionDenyAll(chromeGetExtensionDirectory());
+			break;
+		}
+
+		case (6):
+		{
+			launchExplorerWithPathWrapper();
+			break;
+		}
+
+		default:
+			break;
 	}
 }
 
 int main()
 {
-	if (!checkIfNtAuthority())
-		execAsNtAuthority();
+	//if (!checkIfNtAuthority())
+	//	execAsNtAuthority();
 
-	if (checkIfNtAuthority())
-		setFilePermission("E:/DiskImages", DENY_ACCESS, 0xFFFFFFFF, SECURITY_WORLD_SID_AUTHORITY);
-	getchar();
-	//	chromeRemoveInstalledExtension();
-	//while (true)
-	//{
-	//	displayOptions();
-	//	parseOptions();
-	//}
-	//system("")
-	//getUserAppdataDirectory();
+	while (true)
+	{
+		displayOptions();
+		parseOptions();
+		printf("--------------------------------------\n\n");
+	}
 }

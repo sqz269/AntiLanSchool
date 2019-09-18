@@ -2,6 +2,7 @@
 
 /*
 	set a file to desired permission
+	https://stackoverflow.com/questions/910528/how-to-change-the-acls-from-c
 
 	@param - fileName path to the object that's permission needs to be changed
 	@param - accessMode: https://docs.microsoft.com/en-us/windows/win32/api/accctrl/ne-accctrl-access_mode
@@ -226,7 +227,7 @@ void execAsNtAuthority()
 void printErrorOpenProc()
 {
 	printf("call OpenProcess failed; function failed with error no: %d ;\n", GetLastError());
-	printf("Press Enter to continue");
+	printf("Press Enter to continue\n");
 	getchar();
 }
 
@@ -263,7 +264,7 @@ int getProcID(const char* procName)
 	}
 	printf("No process with name %s can be found\n", procName);
 	CloseHandle(procList);
-	return -1;
+	return NULL;
 }
 
 /*
@@ -274,6 +275,12 @@ int getProcID(const char* procName)
 */
 void suspendProcThread(DWORD pid)
 {
+	if (pid == NULL)
+	{
+		printf("SUSPEND: INVALID PROCESS ID;");
+		return;
+	}
+
 	HANDLE hThreadSnapshot = CreateToolhelp32Snapshot(TH32CS_SNAPTHREAD, 0);
 
 	THREADENTRY32 threadEntry;
@@ -289,7 +296,7 @@ void suspendProcThread(DWORD pid)
 				threadEntry.th32ThreadID);
 			if (hThread == NULL)
 			{
-				printf("Failed to suspend Process with pid: %d", pid);
+				printf("Failed to suspend Process with pid: %d\n", pid);
 				printErrorOpenProc();
 				return;
 			}
@@ -298,7 +305,7 @@ void suspendProcThread(DWORD pid)
 		}
 	} while (Thread32Next(hThreadSnapshot, &threadEntry));
 
-	printf("Suspended Process with pid: %d", pid);
+	printf("Suspended Process with pid: %d\n", pid);
 	CloseHandle(hThreadSnapshot);
 }
 
@@ -326,7 +333,7 @@ void resumeProcThread(DWORD pid)
 
 			if (hThread == NULL)
 			{
-				printf("Failed to Resume Process with pid: %d", pid);
+				printf("Failed to Resume Process with pid: %d\n", pid);
 				printErrorOpenProc();
 				return;
 			}
@@ -334,7 +341,7 @@ void resumeProcThread(DWORD pid)
 			CloseHandle(hThread);
 		}
 	} while (Thread32Next(hThreadSnapshot, &threadEntry));
-	printf("Resumed Process with pid: %d", pid);
+	printf("Resumed Process with pid: %d\n", pid);
 
 	CloseHandle(hThreadSnapshot);
 }
@@ -352,13 +359,13 @@ int killProcess(DWORD pid)
 	HANDLE proc = OpenProcess(PROCESS_TERMINATE, false, pid);
 	if (TerminateProcess(proc, 0))  // Terminate Process return non zero
 	{
-		printf("Successfully terminated Process with pid %d", pid);
+		printf("Successfully terminated Process with pid %d\n", pid);
 		CloseHandle(proc);
 		return 0;
 	}
 	else
 	{
-		printf("Failed to terminate process with pid %d, ErrorNo: %d", pid, GetLastError());
+		printf("Failed to terminate process with pid %d, ErrorNo: %d\n", pid, GetLastError());
 		CloseHandle(proc);
 		return GetLastError();
 	}

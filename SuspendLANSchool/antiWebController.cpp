@@ -13,7 +13,7 @@ void setRegKeyPermissionDenyAll(std::string registryPath)
 
 void chromeRemoveExtensionInstallForceList()
 {
-
+	
 }
 
 /*
@@ -44,7 +44,8 @@ void chromeRemoveExtensionInstallForceListSpecific(std::string ExtID)
 std::string chromeGetExtensionDirectory()
 {
 	std::string localAppdata = getUserLocalAppdataDirectory();
-	std::string extensionDirectory = localAppdata + "\\Google\\Chrome\\User Data\\Default\\Extensions";
+	std::string extensionDirectory;
+	extensionDirectory = localAppdata + "\\Google\\Chrome\\User Data\\Default\\Extensions";
 	return extensionDirectory;
 }
 
@@ -55,6 +56,19 @@ std::string chromeGetExtensionDirectory()
 */
 std::string chromeRemoveInstalledExtensionSpecific(std::string extId)
 {
+	std::string dir = chromeGetExtensionDirectory();
+	std::string extFullPath = dir + "\\" + extId;
+	std::cout << "Target Directory: " << dir << std::endl;
+	for (filesystem::directory_entry file : filesystem::directory_iterator(dir))
+	{
+		std::cout << "Current file: " << file.path().string() << std::endl;
+		if ((file.path().string() == extFullPath))
+		{
+			std::cout << "Removing: " << file.path().string() << std::endl;
+			filesystem::remove_all(file);
+			return file.path().string();
+		}
+	}
 	return "";
 }
 
@@ -77,7 +91,14 @@ void chromeRemoveInstalledExtension()
 	Prevents chrome from installing additional extension from web store
 	by setting the packed extension's directory to read only
 */
-void chromePreventAdditionalExtensionInstall()
+void chromePreventExtensionInstall(std::string extDir)
 {
-
+	if (extDir == "")
+	{
+		setDirectoryPermissionDenyAll(chromeGetExtensionDirectory());
+	}
+	else
+	{
+		setDirectoryPermissionDenyAll(extDir);
+	}
 }
