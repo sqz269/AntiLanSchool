@@ -5,18 +5,20 @@
 #include <ShlObj_core.h>
 #include <comdef.h>
 
+#include <AccCtrl.h>
+#include <AclAPI.h>
+
 #include <thread>
 #include <string>
 
 #define MAX_NAME 256
 
-enum suspendType
+struct PermCtrlSID
 {
-	KILL,
-	DEBUGGER,
-	THREAD
+
 };
 
+void setFilePermission(LPCTSTR fileName, _ACCESS_MODE accessMode, unsigned long accessPermissions, SID_IDENTIFIER_AUTHORITY permissionTargetEntity);
 
 HRESULT GetUserFromProcess(const DWORD procId, std::string& strUser, std::string& strdomain);
 BOOL GetLogonFromToken(HANDLE hToken, std::string& strUser, std::string& strdomain);

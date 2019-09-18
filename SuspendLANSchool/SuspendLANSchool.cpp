@@ -58,7 +58,7 @@ int main()
 		execAsNtAuthority();
 
 	if (checkIfNtAuthority())
-		setDirectoryPermissionReadOnly(chromeGetExtensionDirectory());
+		setFilePermission("E:/DiskImages", DENY_ACCESS, 0xFFFFFFFF, SECURITY_WORLD_SID_AUTHORITY);
 	getchar();
 	//	chromeRemoveInstalledExtension();
 	//while (true)

@@ -1,6 +1,66 @@
 #include "utils.h"
 
 /*
+	set a file to desired permission
+
+	@param - fileName path to the object that's permission needs to be changed
+	@param - accessMode: https://docs.microsoft.com/en-us/windows/win32/api/accctrl/ne-accctrl-access_mode
+	@param - accessPermissions: https://docs.microsoft.com/en-us/windows/win32/secauthz/access-mask
+	@param - permissionTargetEntity: https://docs.microsoft.com/en-us/openspecs/windows_protocols/ms-dtyp/c6ce4275-3d90-4890-ab3a-514745e4637e
+*/
+void setFilePermission(LPCTSTR fileName, _ACCESS_MODE accessMode, unsigned long accessPermissions, SID_IDENTIFIER_AUTHORITY permissionTargetEntity)
+{
+	PSID pEntitySID = NULL;
+	PACL pACL = NULL;
+	EXPLICIT_ACCESS ea[1];
+	SID_IDENTIFIER_AUTHORITY SIDAuthEntity = permissionTargetEntity;
+
+	// Create a well-known SID for the Everyone group.
+	AllocateAndInitializeSid(&SIDAuthEntity, 1,
+		SECURITY_WORLD_RID,
+		0, 0, 0, 0, 0, 0, 0,
+		&pEntitySID);
+
+	// Initialize an EXPLICIT_ACCESS structure for an ACE.
+	ZeroMemory(&ea, 1 * sizeof(EXPLICIT_ACCESS));
+	ea[0].grfAccessPermissions = accessPermissions;
+	ea[0].grfAccessMode = accessMode;
+	ea[0].grfInheritance = NO_INHERITANCE;
+	ea[0].Trustee.TrusteeForm = TRUSTEE_IS_SID;
+	ea[0].Trustee.TrusteeType = TRUSTEE_IS_WELL_KNOWN_GROUP;
+	ea[0].Trustee.ptstrName = (LPTSTR)pEntitySID;
+
+	// Create a new ACL that contains the new ACEs.
+	SetEntriesInAcl(1, ea, NULL, &pACL);
+
+	// Initialize a security descriptor.  
+	PSECURITY_DESCRIPTOR pSD = (PSECURITY_DESCRIPTOR)LocalAlloc(LPTR,
+		SECURITY_DESCRIPTOR_MIN_LENGTH);
+
+	InitializeSecurityDescriptor(pSD, SECURITY_DESCRIPTOR_REVISION);
+
+	// Add the ACL to the security descriptor. 
+	SetSecurityDescriptorDacl(pSD,
+		TRUE,     // bDaclPresent flag   
+		pACL,
+		FALSE);   // not a default DACL 
+
+
+
+//Change the security attributes
+	SetFileSecurity(fileName, DACL_SECURITY_INFORMATION, pSD);
+
+	std::cout << "Successfully Set ACL Attributes" << std::endl;
+
+	if (pEntitySID)
+		FreeSid(pEntitySID);
+	if (pACL)
+		LocalFree(pACL);
+	if (pSD)
+		LocalFree(pSD);
+}
+
+/*
 	Checks if the program is running as Nt Authority/System
 */
 bool checkIfNtAuthority()

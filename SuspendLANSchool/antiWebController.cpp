@@ -1,12 +1,12 @@
 #include "antiWebController.h"
 
-void setDirectoryPermissionReadOnly(std::string dirPath)
+void setDirectoryPermissionDenyAll(std::string dirPath)
 {
 	// Set permission utilizing commands because windows API is lame
-	
+	setFilePermission(dirPath.c_str(), DENY_ACCESS, 0xFFFFFFFF, SECURITY_WORLD_SID_AUTHORITY);
 }
 
-void setRegistryKeyPermissionReadOnly(std::string registryPath)
+void setRegKeyPermissionDenyAll(std::string registryPath)
 {
 	
 }
@@ -33,6 +33,7 @@ void chromeRemoveAllPolicyAndLock()
 */
 void chromeRemoveExtensionInstallForceListSpecific(std::string ExtID)
 {
+	std::string chromePolicyForceInstallListPath = "SOFTWARE\\Policies\\Google\\Chrome\\";
 
 }
 
