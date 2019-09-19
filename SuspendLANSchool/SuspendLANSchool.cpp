@@ -88,10 +88,10 @@ void parseOptions()
 
 int main()
 {
-	//if (!checkIfNtAuthority())
-	//	execAsNtAuthority();
-
 	if (!checkIfNtAuthority())
+		execAsNtAuthority();
+
+	if (checkIfNtAuthority())
 	{
 		while (true)
 		{
