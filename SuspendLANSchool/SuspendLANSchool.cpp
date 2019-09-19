@@ -128,11 +128,13 @@ void parseOptionsNoPrivilege()
 	case (2):
 	{
 		setDirectoryPermissionDenyAll(chromeGetExtensionDirectory());
+		break;
 	}
 
 	case (3):
 	{
 		launchExplorerWithPathWrapper();
+		break;
 	}
 
 	default:
