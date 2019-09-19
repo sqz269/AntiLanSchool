@@ -82,13 +82,19 @@ void parseOptions()
 
 int main()
 {
-	//if (!checkIfNtAuthority())
-	//	execAsNtAuthority();
+	if (!checkIfNtAuthority())
+		execAsNtAuthority();
 
-	while (true)
+	if (checkIfNtAuthority())
 	{
-		displayOptions();
-		parseOptions();
-		printf("--------------------------------------\n\n");
+		while (true)
+		{
+			displayOptions();
+			parseOptions();
+			printf("--------------------------------------\n\n");
+		}
 	}
+	printf("Press Enter to exit");
+	getchar();
+	exit(0);
 }

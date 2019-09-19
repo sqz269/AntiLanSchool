@@ -61,7 +61,6 @@ std::string chromeRemoveInstalledExtensionSpecific(std::string extId)
 	std::cout << "Target Directory: " << dir << std::endl;
 	for (filesystem::directory_entry file : filesystem::directory_iterator(dir))
 	{
-		std::cout << "Current file: " << file.path().string() << std::endl;
 		if ((file.path().string() == extFullPath))
 		{
 			std::cout << "Removing: " << file.path().string() << std::endl;
