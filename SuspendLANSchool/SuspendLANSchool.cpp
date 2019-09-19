@@ -86,11 +86,62 @@ void parseOptions()
 	}
 }
 
+void displayOptionsNoPrivilege()
+{
+	puts("Choose options:");
+	puts("0 - Elevate to SYSTEM privilege (Program needs to be executed as admin first)");
+	puts("1 - Remove LanSchool Chrome Extension (Chrome Restart Required)");
+	puts("2 - Make Chrome Extension Directory Read Only");
+	puts("3 - Open explorer to specific path (Bypass C: Drive hiding)");
+}
+
+void parseOptionsNoPrivilege()
+{
+	int option;
+
+	printf("Enter options: ");
+	std::cin >> option;
+	while (std::cin.fail())
+	{
+		std::cin.clear();
+		std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+		printf("Enter options: ");
+		std::cin >> option;
+	};
+	std::cin.clear();
+	std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+
+	printf("\n\n--------------------------------------\nExecution Details: \n");
+	switch (option)
+	{
+	case (0):
+	{
+		execAsNtAuthority();
+		break;
+	}
+
+	case (1):
+	{
+		deleteLanSchoolChromeExt();
+		break;
+	}
+	case (2):
+	{
+		setDirectoryPermissionDenyAll(chromeGetExtensionDirectory());
+	}
+
+	case (3):
+	{
+		launchExplorerWithPathWrapper();
+	}
+
+	default:
+		break;
+	}
+}
+
 int main()
 {
-	if (!checkIfNtAuthority())
-		execAsNtAuthority();
-
 	if (checkIfNtAuthority())
 	{
 		while (true)
@@ -100,6 +151,17 @@ int main()
 			printf("--------------------------------------\n\n");
 		}
 	}
+	else
+	{
+		printf("Elevate to SYSTEM (option 0) to unlock more options\n");
+		while (true)
+		{
+			displayOptionsNoPrivilege();
+			parseOptionsNoPrivilege();
+			printf("--------------------------------------\n\n");
+		}
+	}
+
 	printf("Press Enter to exit");
 	getchar();
 	exit(0);
