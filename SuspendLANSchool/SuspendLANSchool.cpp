@@ -23,13 +23,19 @@ void displayOptions()
 void parseOptions()
 {
 	int option;
-	do
+
+	printf("Enter options: ");
+	std::cin >> option;
+	while (std::cin.fail())
 	{
+		std::cin.clear();
+		std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 		printf("Enter options: ");
 		std::cin >> option;
-	} while (std::cin.fail());
+	};
 	std::cin.clear();
 	std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+
 	printf("\n\n--------------------------------------\nExecution Details: \n");
 	switch (option)
 	{
@@ -53,7 +59,7 @@ void parseOptions()
 
 		case (3):
 		{
-			printf("Disable Key Logger feature work in progress");
+			printf("Disable Key Logger feature work in progress\n");
 			break;
 		}
 
@@ -82,10 +88,10 @@ void parseOptions()
 
 int main()
 {
-	if (!checkIfNtAuthority())
-		execAsNtAuthority();
+	//if (!checkIfNtAuthority())
+	//	execAsNtAuthority();
 
-	if (checkIfNtAuthority())
+	if (!checkIfNtAuthority())
 	{
 		while (true)
 		{

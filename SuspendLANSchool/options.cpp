@@ -19,7 +19,7 @@ void suspendLanSchool()
 	int lanSchoolPid = getProcID(LANSCHOOLPROCESSNAME);
 	if (lanSchoolPid == NULL)
 	{
-		printf("Failed to get %s's Pid; ", LANSCHOOLPROCESSNAME);
+		printf("Failed to get %s's Pid; \n", LANSCHOOLPROCESSNAME);
 		return;
 	}
 
@@ -43,7 +43,7 @@ void killProcessWrapper()
 	int procId = getProcID(procName.c_str());
 	if (procId == NULL)
 	{
-		printf("Failed to get process id for process name: %s", procName.c_str());
+		printf("Failed to get process id for process name: %s\n", procName.c_str());
 	}
 	else
 		killProcess(procId);
@@ -78,7 +78,7 @@ void launchExplorerWithPathWrapper()
 	if (path.empty())
 	{
 		path = "C:\\";
-		printf("No path entered: Defaulting to C:\\");
+		printf("No path entered: Defaulting to C:\\ \n");
 	}
 	startExplorerAtPath(path);
 }
