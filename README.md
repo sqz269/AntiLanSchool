@@ -22,6 +22,9 @@ A program that prevents lanschool from partially or completely controlling the c
 
 ### WARNING: BOTH PSEXEC AND THE PROGRAM ITSELF MUST BE ON A LOCAL DRIVE, NOT ON A NETWORK DRIVE
 
+## Contributing
+Any contributions are welcome
+
 ## Extra
 
 - Use carefully, I am not responsible for any consequences caused by this software
