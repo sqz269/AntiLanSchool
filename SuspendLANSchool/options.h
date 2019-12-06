@@ -1,6 +1,6 @@
 #pragma once
-#include "utils.h"
-#include "misc.h"
+#include "otherUtils.h"
+#include "procUtils.h"
 #include "antiWebController.h"
 
 static const char* LANSCHOOLPROCESSNAME = "procexp64.exe";

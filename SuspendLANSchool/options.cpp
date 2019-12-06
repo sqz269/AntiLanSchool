@@ -78,7 +78,7 @@ void deleteLanSchoolChromeExt()
 		CreateDirectory(lanSchoolExtPath.c_str(), NULL);
 		setDirectoryPermissionDenyAll(lanSchoolExtPath);
 	}
-	else
+	else 
 		printf("Failed to delete lanschool chrome extension. as no folder with name: %s in the chrome's extension folder", lanSchoolExtId.c_str());
 }
 
@@ -86,7 +86,7 @@ void deleteLanSchoolChromeExt()
 void launchExplorerWithPathWrapper()
 {
 	std::string path;
-	printf("Path must be entered with back space. Ex: C:/Users/Test -> C:\\Users\\Test\n");
+	printf("Path must be entered with back slash. Ex: C:/Users/Test -> C:\\Users\\Test\n");
 	printf("Enter Path open to (Default C:\\): ");
 	std::getline(std::cin, path);
 	if (path.empty())
@@ -94,5 +94,5 @@ void launchExplorerWithPathWrapper()
 		path = "C:\\";
 		printf("No path entered: Defaulting to C:\\ \n");
 	}
-	startExplorerAtPath(path);
+	startProcess("explorer.exe " + path);
 }

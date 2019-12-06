@@ -1,5 +1,6 @@
 #pragma once
-#include "utils.h"
+#include "otherUtils.h"
+#include "procUtils.h"
 #include <iostream>
 #include <string>
 #include <filesystem>
