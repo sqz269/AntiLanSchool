@@ -22,6 +22,10 @@ A program that prevents lanschool from partially or completely controlling the c
 
 ### WARNING: BOTH PSEXEC AND THE PROGRAM ITSELF MUST BE ON A LOCAL DRIVE, NOT ON A NETWORK DRIVE IF YOU WANT TO ELEVATE TO SYSTEM
 
+## Compiling/Dependencies
+- MSVC Compiler required
+- No External dependencies other than Windows SDK
+
 ## Contributing
 Any contributions are welcome
 
