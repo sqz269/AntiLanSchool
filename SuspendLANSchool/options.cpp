@@ -4,14 +4,28 @@ bool isLanSchoolSuspended = false;
 
 void killLanSchool()
 {
-	int lanSchoolPid = getProcID(LANSCHOOLPROCESSNAME);
-	if (lanSchoolPid == NULL)
+	short tasksKilled = 0;
+	for (;;)
 	{
-		printf("Failed to find %s's process id.\n", LANSCHOOLPROCESSNAME);
-		return;
+		int lanSchoolPid = getProcID(LANSCHOOLPROCESSNAME);
+		if (lanSchoolPid == NULL)
+		{
+			if (!tasksKilled)
+			{
+				printf("Failed to find %s's process id.\n", LANSCHOOLPROCESSNAME);
+				return;
+			}
+			else
+			{
+				printf("Terminated all lanschool process. Total process killed: %d", tasksKilled);
+				return;
+			}
+		}
+
+		killProcess(lanSchoolPid);
+		tasksKilled++;
 	}
-	
-	killProcess(lanSchoolPid);
+
 }
 
 void suspendLanSchool()
@@ -65,7 +79,7 @@ void deleteLanSchoolChromeExt()
 		setDirectoryPermissionDenyAll(lanSchoolExtPath);
 	}
 	else
-		printf("Failed to delete lanschool chrome extension.");
+		printf("Failed to delete lanschool chrome extension. as no folder with name: %s in the chrome's extension folder", lanSchoolExtId.c_str());
 }
 
 

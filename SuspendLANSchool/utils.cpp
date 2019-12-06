@@ -9,7 +9,7 @@
 	@param - accessPermissions: https://docs.microsoft.com/en-us/windows/win32/secauthz/access-mask
 	@param - permissionTargetEntity: https://docs.microsoft.com/en-us/openspecs/windows_protocols/ms-dtyp/c6ce4275-3d90-4890-ab3a-514745e4637e
 */
-void setFilePermission(LPCTSTR fileName, _ACCESS_MODE accessMode, unsigned long accessPermissions, SID_IDENTIFIER_AUTHORITY permissionTargetEntity)
+void setFilePermission(LPCTSTR fileName, _ACCESS_MODE accessMode, ACCESS_MASK accessPermissions, SID_IDENTIFIER_AUTHORITY permissionTargetEntity)
 {
 	PSID pEntitySID = NULL;
 	PACL pACL = NULL;
@@ -60,6 +60,19 @@ void setFilePermission(LPCTSTR fileName, _ACCESS_MODE accessMode, unsigned long 
 	if (pSD)
 		LocalFree(pSD);
 }
+
+//void setRegistryEntryPermission(HKEY key, LPCSTR subkey)
+//{
+//	if(RegOpenKeyEx(HKEY_LOCAL_MACHINE,
+//		TEXT("SOFTWARE\\Microsoft\\DirectShow\\Preferred"),
+//		0,
+//		KEY_READ,
+//		&hTestKey) == ERROR_SUCCESS
+//	)
+//	{
+//		while (QueryKey(hTestKey));
+//	}
+//}
 
 /*
 	Checks if the program is running as Nt Authority/System

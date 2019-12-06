@@ -3,7 +3,7 @@
 #include "misc.h"
 #include "antiWebController.h"
 
-static const char* LANSCHOOLPROCESSNAME = "student.exe";
+static const char* LANSCHOOLPROCESSNAME = "procexp64.exe";
 
 extern bool isLanSchoolSuspended;
 

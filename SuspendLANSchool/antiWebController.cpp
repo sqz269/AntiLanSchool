@@ -2,8 +2,7 @@
 
 void setDirectoryPermissionDenyAll(std::string dirPath)
 {
-	// Set permission utilizing commands because windows API is lame
-	setFilePermission(dirPath.c_str(), DENY_ACCESS, 0xFFFFFFFF, SECURITY_WORLD_SID_AUTHORITY);
+	setFilePermission(dirPath.c_str(), DENY_ACCESS, PERMISSION_ALL_PERMISSION, SECURITY_WORLD_SID_AUTHORITY);
 }
 
 void setRegKeyPermissionDenyAll(std::string registryPath)
@@ -13,7 +12,7 @@ void setRegKeyPermissionDenyAll(std::string registryPath)
 
 void chromeRemoveExtensionInstallForceList()
 {
-	
+	RegDeleteKeyA(HKEY_LOCAL_MACHINE, chromeRegPolicyRootEntry.c_str());
 }
 
 /*
@@ -24,7 +23,7 @@ void chromeRemoveExtensionInstallForceList()
 void chromeRemoveAllPolicyAndLock()
 {
 	std::string chromePolicyRegPath = "SOFTWARE\\Policies\\Google\\Chrome\\";
-	RegDeleteKey(HKEY_LOCAL_MACHINE, chromePolicyRegPath.c_str());
+	RegDeleteKeyA(HKEY_LOCAL_MACHINE, chromePolicyRegPath.c_str());
 }
 
 /*

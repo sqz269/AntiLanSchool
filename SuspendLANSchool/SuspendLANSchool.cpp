@@ -1,4 +1,5 @@
 #define NOMINMAX
+#define DEBUG_MODE 0
 
 #include "options.h"
 #include "misc.h"
@@ -144,6 +145,10 @@ void parseOptionsNoPrivilege()
 
 int main()
 {
+	if (DEBUG_MODE)
+	{
+		
+	}
 	if (checkIfNtAuthority())
 	{
 		while (true)
