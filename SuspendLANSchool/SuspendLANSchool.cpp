@@ -8,6 +8,7 @@
 
 void displayOptions()
 {
+	puts("Currently running as [NT Authority\\System]");
 	puts("Choose options:");
 	puts("0 - Kill LanSchool (students.exe)");
 	if (isLanSchoolSuspended)
@@ -23,19 +24,7 @@ void displayOptions()
 
 void parseOptions()
 {
-	int option;
-
-	printf("Enter options: ");
-	std::cin >> option;
-	while (std::cin.fail())
-	{
-		std::cin.clear();
-		std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-		printf("Enter options: ");
-		std::cin >> option;
-	};
-	std::cin.clear();
-	std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+	int option = input<int>("Enter options: ");
 
 	printf("\n\n--------------------------------------\nExecution Details: \n");
 	switch (option)
@@ -92,25 +81,14 @@ void displayOptionsNoPrivilege()
 	puts("Choose options:");
 	puts("0 - Elevate to SYSTEM privilege (Program needs to be executed as admin first)");
 	puts("1 - Remove LanSchool Chrome Extension (Chrome Restart Required)");
-	puts("2 - Make Chrome Extension Directory Read Only");
-	puts("3 - Open explorer to specific path (Bypass C: Drive hiding)");
+	puts("2 - Remove Specific Chrome plugin");
+	puts("3 - Make Chrome Extension Directory Read Only");
+	puts("4 - Open explorer to specific path (Bypass C: Drive hiding)");
 }
 
 void parseOptionsNoPrivilege()
 {
-	int option;
-
-	printf("Enter options: ");
-	std::cin >> option;
-	while (std::cin.fail())
-	{
-		std::cin.clear();
-		std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-		printf("Enter options: ");
-		std::cin >> option;
-	};
-	std::cin.clear();
-	std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+	int option = input<int>("Enter Options: ");
 
 	printf("\n\n--------------------------------------\nExecution Details: \n");
 	switch (option)
@@ -128,11 +106,16 @@ void parseOptionsNoPrivilege()
 	}
 	case (2):
 	{
+
+		break;
+	}
+	case (3):
+	{
 		setDirectoryPermissionDenyAll(chromeGetExtensionDirectory());
 		break;
 	}
 
-	case (3):
+	case (4):
 	{
 		launchExplorerWithPathWrapper();
 		break;

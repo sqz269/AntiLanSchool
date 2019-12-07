@@ -212,10 +212,8 @@ void execAsNtAuthority()
 		GetModuleFileName(thisModule, exePath, MAX_PATH);
 		printf("Got Executable Path: %s\n", exePath);
 	}
-	std::string psexecPath;
-	printf("Enter PsExec.exe/PsExec64.exe path (Including File Name): ");
-	//std::getline(std::cin, psexecPath);
-	std::cin >> psexecPath;
+
+	std::string psexecPath = input<std::string>("Enter PsExec.exe/PsExec64.exe path (Including File Name): ");
 
 	if (psexecPath.empty())
 	{
@@ -227,9 +225,7 @@ void execAsNtAuthority()
 	command = psexecPath + " -i -s " + exePath;
 	printf("Constructed command: %s\n", command.c_str());
 	printf("Executing Command...");
-
 	//std::thread::
 	system(command.c_str());
-	getchar();
-	//exit(0);
+	input<std::string>("Press Enter to continue");
 }
